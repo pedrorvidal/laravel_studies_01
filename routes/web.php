@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\OnlyAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,3 +68,51 @@ Route::get(
         'value2' => '[A-Za-z0-9]+',
     ]
 );
+
+//--------------------------
+// ROUTE NAMES
+//--------------------------
+Route::get('/rota_abc', function () {
+    echo "Rota nomeada";
+})->name('rota_nomeada');
+
+Route::get('/rota_referenciada', function () {
+    return redirect()->route('rota_nomeada');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/home', [MainController::class, 'index']);
+    Route::get('/about', [MainController::class, 'about']);
+    Route::get('/management', [MainController::class, 'mostrarValor']);
+});
+
+// Rota com middleware
+Route::get('/admin/only', function () {
+    echo "Apenas administradores";
+})->middleware([OnlyAdmin::class]);
+
+// Middleware aplicado para um grupo de rotas
+Route::middleware([OnlyAdmin::class])->group(function () {
+    Route::get('/admin/only2', function () {
+        echo "Apenas administradores 2";
+    });
+    Route::get('/admin/only3', function () {
+        echo "Apenas administradores 3";
+    });
+});
+
+//Método de escrever rotas para funções de controllers:
+Route::get('/new', [UserController::class, 'new']);
+Route::get('/edit', [UserController::class, 'edit']);
+Route::get('/delete', [UserController::class, 'delete']);
+
+//Método para escrever rotas para um controller, e chamar dentro dela as functions:
+Route::controller(UserController::class)->group(function () {
+    Route::get('/user/new', 'new');
+    Route::get('/user/edit', 'edit');
+    Route::get('/user/delete', 'delete');
+});
+
+Route::fallback(function () {
+    echo "Página não encontrada";
+});
