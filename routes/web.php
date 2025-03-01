@@ -54,3 +54,15 @@ Route::get(
         echo "$value";
     }
 )->where('value', '[A-Za-z0-9]+');
+
+Route::get(
+    '/exp3/{value1}/{value2}',
+    function ($value) {
+        echo "$value";
+    }
+)->where(
+    [
+        'value1' => '[0-9]+',
+        'value2' => '[A-Za-z0-9]+',
+    ]
+);
