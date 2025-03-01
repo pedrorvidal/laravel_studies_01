@@ -2,50 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-/**
- * MainControlle class
- *
- * @category Controller
- *
- * @package App\Http\Controllers
- *
- * @author Pedro Vidal <pedrorvidal@gmail.com>
- *
- * @license https://opensource.org/licenses/MIT MIT
- *
- * @link https://laravel.com/docs/8.x/controllers
- */
 class MainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    //
+    public function initMethod(): string
     {
-        echo "index";
+        // para um ECHO como retorno, deve ser tipo void (vazio)
+        // echo "Hello world!";
+        return "Hello world!";
     }
-
-
-    /**
-     * About function
-     *
-     * @return void
-     */
-    public function about()
+    public function viewPage(): View
     {
-        echo "about";
-    }
-
-
-    /**
-     * Teste function
-     */
-    public function teste()
-    {
-        echo "Teste";
+        return view('home');
     }
 }
