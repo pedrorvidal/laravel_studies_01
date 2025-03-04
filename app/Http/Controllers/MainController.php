@@ -14,6 +14,12 @@ class MainController extends Controller
         // echo "Hello world!";
         return "Hello world!";
     }
+
+    /**
+     * Função para renderizar a página
+     *
+     * @return View
+     */
     public function viewPage(): View
     {
         return view('home');
